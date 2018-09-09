@@ -1,13 +1,35 @@
 package com.onos.weather.weatherapp.screen_main
 
+import android.accounts.NetworkErrorException
 import com.onos.weather.weatherapp.base.BasePresenter
+import com.onos.weather.weatherapp.network.WeatherApiService
+import com.onos.weather.weatherapp.network.response.CurrentWeatherResponse
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class MainPresenter : BasePresenter<MainView>() {
+class MainPresenter(val apiService: WeatherApiService) : BasePresenter<MainView>() {
 
-    fun fetchForecast() {
+    fun fetchForecast(city: String) {
+//        if (view?.isNetworkAvailable() == true) {}
 
-//        view?.isNetworkAvailable()
-
+        apiService.getCityCurrentWeather(city)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { view?.showLoading("Loading forecast...") }
+                .doFinally { view?.dismissLoading() }
+                .subscribe(
+                        {
+                            showForecast(it)
+                        },
+                        {
+                            if (it is NetworkErrorException) {
+                                view?.showMessage("No Internet")
+                                showLastSavedForecast()
+                            } else {
+                                view?.showMessage(it.localizedMessage)
+                            }
+                        }
+                )
     }
 
     private fun saveForecast() {
@@ -16,7 +38,7 @@ class MainPresenter : BasePresenter<MainView>() {
 
     }
 
-    private fun showForecast() {
+    private fun showForecast(it: CurrentWeatherResponse) {
         view?.showForecastList()
     }
 

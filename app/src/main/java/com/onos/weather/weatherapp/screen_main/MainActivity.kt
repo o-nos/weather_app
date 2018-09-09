@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.onos.weather.weatherapp.R
 import com.onos.weather.weatherapp.base.BaseActivity
+import com.onos.weather.weatherapp.base.WeatherApp
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), MainView {
 
     private val presenter: MainPresenter by lazy {
-        MainPresenter()
+        MainPresenter(WeatherApp.apiService)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +20,7 @@ class MainActivity : BaseActivity(), MainView {
 
         initUI()
 
-        presenter.fetchForecast()
+        presenter.fetchForecast("Poltava")
 
     }
 
