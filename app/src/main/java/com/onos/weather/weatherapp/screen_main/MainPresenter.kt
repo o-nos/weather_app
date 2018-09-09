@@ -12,7 +12,7 @@ class MainPresenter(val apiService: WeatherApiService) : BasePresenter<MainView>
     fun fetchForecast(city: String) {
 //        if (view?.isNetworkAvailable() == true) {}
 
-        apiService.getCityCurrentWeather(city)
+        val disposable = apiService.getCityCurrentWeather(city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { view?.showLoading("Loading forecast...") }
@@ -30,6 +30,8 @@ class MainPresenter(val apiService: WeatherApiService) : BasePresenter<MainView>
                             }
                         }
                 )
+
+        subscriptionList?.add(disposable)
     }
 
     private fun saveForecast() {
