@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Weather app</string>
+    <string name="loading_forecast">Loading forecast…</string>
+    <string name="no_internet">No Internet</string>
+    <string name="forecast_temperature_mask">%1$s \u00b0C</string>
+    <string name="add_city_item">Add city</string>
 </resources>

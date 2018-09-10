@@ -17,6 +17,7 @@ interface WeatherApiService {
 
         private const val WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/"
         private const val APP_API_ID = "885d506d226d73901d96b180c50af51c"
+        private const val API_UNITS = "metric" // TODO add menu item that changes units (ENUM vals)
 
         fun create(): WeatherApiService {
 
@@ -46,7 +47,8 @@ interface WeatherApiService {
 
     @GET("weather")
     fun getCityCurrentWeather(@Query("q") cityName: String,
-                              @Query("APPID") appId: String = APP_API_ID):
+                              @Query("APPID") appId: String = APP_API_ID,
+                              @Query("units") units: String = API_UNITS):
             Single<CurrentWeatherResponse>
 
 }
