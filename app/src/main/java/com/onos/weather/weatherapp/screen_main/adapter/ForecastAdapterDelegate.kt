@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.onos.weather.weatherapp.R
 import com.onos.weather.weatherapp.base.AdapterDelegate
 import com.onos.weather.weatherapp.extentions.inflate
+import com.onos.weather.weatherapp.utils.DateUtils
 import kotlinx.android.synthetic.main.item_forecast_view.view.*
 
 class ForecastAdapterDelegate(private val dataset: MutableList<WeatherContent>,
@@ -41,6 +42,7 @@ class ForecastAdapterDelegate(private val dataset: MutableList<WeatherContent>,
             temperature.text = String.format(resources.getString(R.string.forecast_temperature_mask),
                     forecastItem.mainTemperature)
             description.text = forecastItem.weatherDescriptionMain
+            forecast_timestamp.text = DateUtils.parseForecastDate(forecastItem.timestamp)
         }
     }
 
