@@ -3,9 +3,11 @@ package com.onos.weather.weatherapp.screen_main.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.onos.weather.weatherapp.R
 import com.onos.weather.weatherapp.base.AdapterDelegate
 import com.onos.weather.weatherapp.extentions.inflate
+import com.onos.weather.weatherapp.network.WeatherApiService
 import com.onos.weather.weatherapp.utils.DateUtils
 import kotlinx.android.synthetic.main.item_forecast_view.view.*
 
@@ -40,9 +42,14 @@ class ForecastAdapterDelegate(private val dataset: MutableList<WeatherContent>,
             }
             city_name.text = forecastItem.cityName
             temperature.text = String.format(resources.getString(R.string.forecast_temperature_mask),
-                    forecastItem.mainTemperature)
+                    forecastItem.mainTemperature.toInt())
             description.text = forecastItem.weatherDescriptionMain
             forecast_timestamp.text = DateUtils.parseForecastDate(forecastItem.timestamp)
+
+            Glide.with(this)
+                    .load(WeatherApiService.getIconUrl(forecastItem.icon))
+                    .into(forecast_icon)
+
         }
     }
 

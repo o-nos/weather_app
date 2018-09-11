@@ -16,6 +16,7 @@ interface WeatherApiService {
     companion object {
 
         private const val WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/"
+        private const val WEATHER_ICON_URL = "http://openweathermap.org/img/w/"
         private const val APP_API_ID = "885d506d226d73901d96b180c50af51c"
         private const val API_UNITS = "metric" // TODO add menu item that changes units (ENUM vals)
 
@@ -41,6 +42,10 @@ interface WeatherApiService {
             return HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             }
+        }
+
+        fun getIconUrl(iconTitle: String): String {
+            return "$WEATHER_ICON_URL$iconTitle.png"
         }
 
     }

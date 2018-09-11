@@ -14,14 +14,17 @@ class ForecastContent(id: Int,
                       val cityName: String,
                       val weatherDescriptionMain: String,
                       val mainTemperature: Double,
+                      val icon: String,
                       val timestamp: Long) : WeatherContent(id) {
 
     companion object {
         fun mapResponseToForecastObject(response: CurrentWeatherResponse): ForecastContent {
             val weatherDescriptionMain = response.weather.first().main
             val timestampInLong = response.dt.toLong()
+            val icon = response.weather.first().icon
+
             return ForecastContent(response.id, response.name, weatherDescriptionMain,
-                    response.main.temp, timestampInLong)
+                    response.main.temp, icon, timestampInLong)
         }
     }
 }
