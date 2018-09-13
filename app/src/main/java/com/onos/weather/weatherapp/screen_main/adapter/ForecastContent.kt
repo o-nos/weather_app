@@ -1,5 +1,6 @@
 package com.onos.weather.weatherapp.screen_main.adapter
 
+import com.onos.weather.weatherapp.datebase.forecast_storage.ForecastData
 import com.onos.weather.weatherapp.network.response.CurrentWeatherResponse
 
 open class WeatherContent(val id: Int)
@@ -18,7 +19,7 @@ class ForecastContent(id: Int,
                       val timestamp: Long) : WeatherContent(id) {
 
     companion object {
-        fun mapResponseToForecastObject(response: CurrentWeatherResponse): ForecastContent {
+        fun mapResponseToForecastContent(response: CurrentWeatherResponse): ForecastContent {
             val weatherDescriptionMain = response.weather.first().main
             val timestampInLong = response.dt.toLong()
             val icon = response.weather.first().icon
@@ -26,5 +27,12 @@ class ForecastContent(id: Int,
             return ForecastContent(response.id, response.name, weatherDescriptionMain,
                     response.main.temp, icon, timestampInLong)
         }
+
+        fun mapForecastDataToForecastContent(forecastData: ForecastData): ForecastContent {
+            return with(forecastData) {
+                ForecastContent(id, cityName, weatherDescriptionMain, mainTemperature, icon, timestamp.toLong())
+            }
+        }
+
     }
 }

@@ -17,7 +17,7 @@ class MainActivity : BaseActivity(), MainView {
     private val TAG = MainActivity::class.java.simpleName
 
     private val presenter: MainPresenter by lazy {
-        MainPresenter(WeatherApp.apiService)
+        MainPresenter(WeatherApp.apiService, WeatherApp.forecastStorage, WeatherApp.gsonParser)
     }
 
     private val forecastItemCallback: ((WeatherContent) -> Unit) = {
@@ -44,13 +44,18 @@ class MainActivity : BaseActivity(), MainView {
         forecast_cities_list.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         forecast_cities_list.adapter = forecastAdapter
+
+        swipe_to_refresh.setOnRefreshListener {
+            presenter.fetchForecastByCity("Poltava") // TODO remove hardcoded value
+        }
     }
 
     override fun showForecastList(forecastContentList: MutableList<WeatherContent>) {
         forecastAdapter.updateDataset(forecastContentList)
+        if (swipe_to_refresh.isRefreshing) {
+            swipe_to_refresh.isRefreshing = false
+        }
     }
-
-    // TODO add pull to refresh
 
     // TODO add menu with actions: Edit locations screen, Temperature units
 
