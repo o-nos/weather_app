@@ -59,9 +59,9 @@ class MainActivity : BaseActivity(), MainView {
 
     // TODO add menu with actions: Edit locations screen, Temperature units
 
-    override fun onStop() {
+    override fun onDestroy() {
         presenter.detachView()
-        super.onStop()
+        super.onDestroy()
     }
 
 }
