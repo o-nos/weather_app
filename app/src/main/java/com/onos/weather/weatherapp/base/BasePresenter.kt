@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BasePresenter<T : BaseView> {
 
     var view: T? = null
-    protected var subscriptionList: CompositeDisposable? = CompositeDisposable()
+    protected var disposableList: CompositeDisposable? = CompositeDisposable()
 
     fun attachView(v: T) {
         view = v
@@ -16,8 +16,8 @@ abstract class BasePresenter<T : BaseView> {
     fun detachView() {
         view = null
         onViewDetached()
-        subscriptionList?.dispose()
-        subscriptionList = null
+        disposableList?.dispose()
+        disposableList = null
     }
 
     protected open fun onViewAttached() {
@@ -27,11 +27,15 @@ abstract class BasePresenter<T : BaseView> {
         clearAllSubscriptions()
     }
 
+    fun processError(throwable: Throwable) {
+        view?.showMessage(throwable.localizedMessage)
+    }
+
     fun clearAllSubscriptions() {
-        subscriptionList?.let {
+        disposableList?.let {
             if (!it.isDisposed) {
                 it.clear()
-                subscriptionList = CompositeDisposable()
+                disposableList = CompositeDisposable()
             }
         }
     }

@@ -4,4 +4,5 @@
     <string name="no_internet">No Internet</string>
     <string name="forecast_temperature_mask">%1$s \u00b0C</string>
     <string name="add_city_item">Add city</string>
+    <string name="enter_city_name">Enter the city name</string>
 </resources>

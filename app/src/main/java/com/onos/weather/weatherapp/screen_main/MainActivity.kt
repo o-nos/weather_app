@@ -1,11 +1,14 @@
 package com.onos.weather.weatherapp.screen_main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.onos.weather.weatherapp.R
 import com.onos.weather.weatherapp.base.BaseActivity
 import com.onos.weather.weatherapp.base.WeatherApp
+import com.onos.weather.weatherapp.screen_add_city.newAddCityActivity
 import com.onos.weather.weatherapp.screen_main.adapter.AddCityContent
 import com.onos.weather.weatherapp.screen_main.adapter.ForecastAdapter
 import com.onos.weather.weatherapp.screen_main.adapter.ForecastContent
@@ -16,14 +19,18 @@ class MainActivity : BaseActivity(), MainView {
 
     private val TAG = MainActivity::class.java.simpleName
 
+    companion object {
+        private const val ADD_CITY_REQUEST_CODE = 1000
+    }
+
     private val presenter: MainPresenter by lazy {
-        MainPresenter(WeatherApp.apiService, WeatherApp.forecastStorage, WeatherApp.gsonParser)
+        MainPresenter(WeatherApp.apiService, WeatherApp.forecastStorage)
     }
 
     private val forecastItemCallback: ((WeatherContent) -> Unit) = {
         when (it) {
             is ForecastContent -> Log.d(TAG, "${it.cityName} is clicked")
-            is AddCityContent -> Log.d(TAG, "Add City is clicked")
+            is AddCityContent -> startActivityForResult(newAddCityActivity(), ADD_CITY_REQUEST_CODE)
         }
     }
 
@@ -36,7 +43,7 @@ class MainActivity : BaseActivity(), MainView {
 
         initUI()
 
-        presenter.fetchForecastByCity("Poltava") // TODO remove hardcoded value
+        presenter.fetchAndSaveAllForecasts()
 
     }
 
@@ -46,14 +53,21 @@ class MainActivity : BaseActivity(), MainView {
         forecast_cities_list.adapter = forecastAdapter
 
         swipe_to_refresh.setOnRefreshListener {
-            presenter.fetchForecastByCity("Poltava") // TODO remove hardcoded value
+            //            presenter.fetchForecastByCity("Poltava") // TODO remove hardcoded value
+            presenter.fetchAndSaveAllForecasts()
         }
     }
 
-    override fun showForecastList(forecastContentList: MutableList<WeatherContent>) {
+    override fun showForecastList(forecastContentList: List<WeatherContent>) {
         forecastAdapter.updateDataset(forecastContentList)
         if (swipe_to_refresh.isRefreshing) {
             swipe_to_refresh.isRefreshing = false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADD_CITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            presenter.loadForecastListFromStorage()
         }
     }
 

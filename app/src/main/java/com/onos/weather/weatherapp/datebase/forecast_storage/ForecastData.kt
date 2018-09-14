@@ -3,7 +3,9 @@ package com.onos.weather.weatherapp.datebase.forecast_storage
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.google.gson.Gson
 import com.onos.weather.weatherapp.datebase.forecast_storage.ForecastData.Companion.FORECAST_TABLE_NAME
+import com.onos.weather.weatherapp.network.response.CurrentWeatherResponse
 
 @Entity(tableName = FORECAST_TABLE_NAME)
 data class ForecastData(@PrimaryKey @ColumnInfo(name = FORECAST_COLUMN_ID) var id: Int,
@@ -24,6 +26,14 @@ data class ForecastData(@PrimaryKey @ColumnInfo(name = FORECAST_COLUMN_ID) var i
         const val FORECAST_COLUMN_ICON = "icon"
         const val FORECAST_COLUMN_TIMESTAMP = "timestamp"
         const val FORECAST_COLUMN_JSON = "json"
+
+        fun mapCurrentWeatherResponseToForecastData(response: CurrentWeatherResponse, gsonParser: Gson): ForecastData {
+            val jsonForecastData = gsonParser.toJson(response)
+            return ForecastData(response.id, response.name,
+                    response.weather.first().main, response.main.temp,
+                    response.weather.first().icon, response.dt,
+                    jsonForecastData)
+        }
 
     }
 

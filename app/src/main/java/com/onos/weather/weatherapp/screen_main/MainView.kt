@@ -5,6 +5,6 @@ import com.onos.weather.weatherapp.screen_main.adapter.WeatherContent
 
 interface MainView : BaseView {
 
-    fun showForecastList(forecastContentList: MutableList<WeatherContent>)
+    fun showForecastList(forecastContentList: List<WeatherContent>)
 
 }

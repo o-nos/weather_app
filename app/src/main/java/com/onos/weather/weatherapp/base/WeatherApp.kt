@@ -24,14 +24,12 @@ class WeatherApp : Application() {
         super.onCreate()
 
         apiService = WeatherApiService.create()
+        gsonParser = GsonBuilder().create()
         appDatabase = Room.databaseBuilder(this, AppDataBase::class.java, AppDataBase.DB_NAME)
                 .allowMainThreadQueries()
                 .build()
-        forecastStorage = ForecastDataStorageImpl(appDatabase.getForecastDataDao())
-
-        gsonParser = GsonBuilder().create()
+        forecastStorage = ForecastDataStorageImpl(appDatabase.getForecastDataDao(), gsonParser)
 
     }
-
 
 }

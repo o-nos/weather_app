@@ -1,5 +1,6 @@
 package com.onos.weather.weatherapp.network
 
+import com.onos.weather.weatherapp.network.response.CurrentWeatherListResponse
 import com.onos.weather.weatherapp.network.response.CurrentWeatherResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
@@ -53,7 +54,11 @@ interface WeatherApiService {
     @GET("weather")
     fun getCityCurrentWeather(@Query("q") cityName: String,
                               @Query("APPID") appId: String = APP_API_ID,
-                              @Query("units") units: String = API_UNITS):
-            Single<CurrentWeatherResponse>
+                              @Query("units") units: String = API_UNITS): Single<CurrentWeatherResponse>
+
+    @GET("group")
+    fun getGroupWeatherList(@Query("id") array: List<Int>,
+                            @Query("APPID") appId: String = APP_API_ID,
+                            @Query("units") units: String = API_UNITS): Single<CurrentWeatherListResponse>
 
 }
