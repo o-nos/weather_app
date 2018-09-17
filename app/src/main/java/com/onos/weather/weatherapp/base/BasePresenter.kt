@@ -27,7 +27,7 @@ abstract class BasePresenter<T : BaseView> {
         clearAllSubscriptions()
     }
 
-    fun processError(throwable: Throwable) {
+    protected open fun processError(throwable: Throwable) {
         view?.showMessage(throwable.localizedMessage)
     }
 

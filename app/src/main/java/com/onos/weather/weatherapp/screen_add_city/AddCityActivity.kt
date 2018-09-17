@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.onos.weather.weatherapp.R
@@ -34,6 +35,9 @@ class AddCityActivity : BaseActivity(), AddCityView {
     }
 
     private fun initUI() {
+        title = getString(R.string.add_city_item)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         new_city_name.addTextChangedListener(cityNameTextWatcher)
         new_city_name.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -77,4 +81,16 @@ class AddCityActivity : BaseActivity(), AddCityView {
             }
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 }

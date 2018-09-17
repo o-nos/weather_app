@@ -7,6 +7,7 @@ import com.onos.weather.weatherapp.network.WeatherApiService
 import com.onos.weather.weatherapp.utils.logd
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class AddCityPresenter(private val apiService: WeatherApiService,
                        private val forecastStorage: ForecastDataStorage) : BasePresenter<AddCityView>() {
@@ -34,5 +35,13 @@ class AddCityPresenter(private val apiService: WeatherApiService,
 
         this.disposableList?.add(disposable)
     }
+
+    override fun processError(throwable: Throwable) {
+        when (throwable) {
+            is HttpException -> view?.showMessage(R.string.could_not_find_city)
+            else -> super.processError(throwable)
+        }
+    }
+
 
 }
