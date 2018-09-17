@@ -37,6 +37,10 @@ class ForecastDataStorageImpl(private val forecastDataDao: ForecastDataDao,
         forecastDataDao.removeAllForecastData()
     }
 
+    override fun removeForecastData(id: Int) {
+        forecastDataDao.removeForecastData(id)
+    }
+
     /**
      * Saves forecast for given city.
      * @param weatherResponse forecast response to be saved in DB

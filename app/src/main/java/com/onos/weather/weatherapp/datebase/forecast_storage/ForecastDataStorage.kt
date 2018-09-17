@@ -12,6 +12,7 @@ interface ForecastDataStorage {
     fun putForecastData(weatherData: ForecastData)
     fun saveForecast(weatherResponse: CurrentWeatherResponse): Single<CurrentWeatherResponse>
     fun saveForecast(weatherResponse: List<CurrentWeatherResponse>): Single<List<CurrentWeatherResponse>>
+    fun removeForecastData(id: Int)
     fun removeAllForecastData()
 
 }

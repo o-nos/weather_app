@@ -1,24 +1,30 @@
 package com.onos.weather.weatherapp.screen_main.adapter
 
+import android.os.Parcelable
 import com.onos.weather.weatherapp.datebase.forecast_storage.ForecastData
 import com.onos.weather.weatherapp.network.response.CurrentWeatherResponse
+import kotlinx.android.parcel.Parcelize
 
-open class WeatherContent(val id: Int)
+abstract class WeatherContent(open val id: Int) : Parcelable
 
-class AddCityContent : WeatherContent(DEFAULT_ID) {
+@Parcelize
+class AddCityContent : WeatherContent(DEFAULT_ID), Parcelable {
     companion object {
         const val DEFAULT_ID = -1
     }
 }
 
-class ForecastContent(id: Int,
+
+@Parcelize
+class ForecastContent(override val id: Int,
                       val cityName: String,
                       val weatherDescriptionMain: String,
                       val mainTemperature: Double,
                       val icon: String,
-                      val timestamp: Long) : WeatherContent(id) {
+                      val timestamp: Long) : WeatherContent(id), Parcelable {
 
     companion object {
+
         fun mapResponseToForecastContent(response: CurrentWeatherResponse): ForecastContent {
             val weatherDescriptionMain = response.weather.first().main
             val timestampInLong = response.dt.toLong()

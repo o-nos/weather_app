@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Weather app</string>
     <string name="loading_forecast">Loading forecast…</string>
     <string name="no_internet">No Internet</string>
@@ -6,4 +7,7 @@
     <string name="add_city_item">Add city</string>
     <string name="enter_city_name">Enter the city name</string>
     <string name="could_not_find_city">Couldn\'t find a city</string>
+    <string name="edit_cities">Edit Cities</string>
+    <string name="removing_city">Removing city…</string>
+
 </resources>

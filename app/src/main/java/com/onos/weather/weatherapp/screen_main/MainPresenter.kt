@@ -10,8 +10,10 @@ import com.onos.weather.weatherapp.screen_main.adapter.AddCityContent
 import com.onos.weather.weatherapp.screen_main.adapter.ForecastContent.Companion.mapForecastDataToForecastContent
 import com.onos.weather.weatherapp.screen_main.adapter.ForecastContent.Companion.mapResponseToForecastContent
 import com.onos.weather.weatherapp.screen_main.adapter.WeatherContent
+import com.onos.weather.weatherapp.utils.logd
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import java.net.UnknownHostException
 
 class MainPresenter(private val apiService: WeatherApiService,
@@ -77,6 +79,10 @@ class MainPresenter(private val apiService: WeatherApiService,
         when (throwable) {
             is NetworkErrorException -> view?.showMessage(R.string.no_internet)
             is UnknownHostException -> view?.showMessage(R.string.no_internet)
+            is HttpException -> {
+                logd(TAG, throwable.localizedMessage)
+                // do nothing, thrown when there's no cities in DB
+            }
             else -> view?.showMessage(throwable.localizedMessage)
         }
     }
