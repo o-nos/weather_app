@@ -3,6 +3,6 @@
 
     <dimen name="error_item_height">20dp</dimen>
 
-    <dimen name="add_city_item_height">40dp</dimen>
+    <dimen name="add_city_item_height">42dp</dimen>
 
 </resources>
