@@ -57,7 +57,7 @@ interface WeatherApiService {
                               @Query("units") units: String = API_UNITS): Single<CurrentWeatherResponse>
 
     @GET("group")
-    fun getGroupWeatherList(@Query("id") array: List<Int>,
+    fun getGroupWeatherList(@Query("id") commaSeparatedCityIds: String,
                             @Query("APPID") appId: String = APP_API_ID,
                             @Query("units") units: String = API_UNITS): Single<CurrentWeatherListResponse>
 

@@ -35,6 +35,17 @@ data class ForecastData(@PrimaryKey @ColumnInfo(name = FORECAST_COLUMN_ID) var i
                     jsonForecastData)
         }
 
+        fun mapForecastDataListForBulkFetching(list: List<ForecastData>): String {
+            val builder = StringBuilder()
+            list.mapIndexed { index, data ->
+                builder.append(data.id)
+                if (index != list.lastIndex) {
+                    builder.append(',')
+                }
+            }
+            return builder.toString()
+        }
+
     }
 
 

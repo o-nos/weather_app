@@ -25,14 +25,6 @@
       </value>
     </option>
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Clouds.kt" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Coord.kt" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Main.kt" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Sys.kt" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Weather.kt" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/onos/weather/weatherapp/network/response/Wind.kt" />
-  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
