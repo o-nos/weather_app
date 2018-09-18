@@ -34,6 +34,7 @@ class EditCitiesActivity : BaseActivity(), EditCitiesView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_cities)
+        title = getString(R.string.edit_cities)
         presenter.attachView(this)
 
         val forecastList = intent.extras?.getParcelableArrayList<ForecastContent>(FORECAST_LIST_EXTRA)
